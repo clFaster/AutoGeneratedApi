@@ -8,7 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
-
+	
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<Exec Command="dotnet tool restore" />
+	<Exec Command="dotnet swagger tofile --output UpdateServerApi.json $(OutputPath)\$(AssemblyName).dll v1" />
+  </Target>
 </Project>
